@@ -12,12 +12,17 @@ app.listen(port, () => {
   console.log(`Example app listening on port`);
 });
 
-const uri =
-  "mongodb+srv://admin:HBXWVtPLaxxuVV6f@cluster84686.th2wh.mongodb.net/MD20101";
+const COMMOM = require('./COMMOM');
+
+const uri = COMMOM.uri;
 
 const mongoose = require("mongoose");
 
 const carModel = require("./carModel");
+
+const apiMobile = require('./api');
+
+app.use('/api', apiMobile);
 
 app.get("/", async (req, res) => {
   await mongoose.connect(uri);
@@ -56,7 +61,7 @@ app.get('/delete_xe/:id', async (req, res) => {
     res.redirect('../');
 });
 
-app.get('/update/:ten', async (req, res) => {
+app.put('/update/:ten', async (req, res) => {
     await mongoose.connect(uri);
 
     let tenXe = req.params.ten;
